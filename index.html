@@ -438,34 +438,213 @@
             </div>
         </div>
 
-        <!-- Header Superior con Menús Desplegables -->
-        <div class="p-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-3 pointer-events-auto z-20 w-full">
+        <!-- BOTÓN FLOTANTE DE MODO PANTALLA LIMPIA (SIEMPRE ACCESIBLE EN FULLY KIOSK / MÓVIL CUANDO SE OCULTA TODO EL HUD) -->
+        <button id="btn-restore-all-hud" onclick="toggleAllHudPanelsVisibility()" class="hidden fixed top-2 right-2 z-[65] pointer-events-auto bg-slate-950/90 hover:bg-slate-900 text-cyan-300 border border-cyan-400/80 px-3 py-1.5 rounded-full text-[10px] font-black shadow-[0_0_18px_rgba(34,211,238,0.6)] flex items-center gap-1">
+            <span>👁️</span> Mostrar Botones
+        </button>
+
+        <!-- ✨ FILTRO AR OFICIAL INCRUSTADO DE TIKTOK LIVE FEST 2026 (COMPACTO Y SIN BLOQUEAR BOTONES) -->
+        <div id="livefest-2026-ar-filter" class="fixed inset-x-0 top-[76px] sm:top-[68px] pointer-events-none z-20 flex flex-col items-center px-2">
+            <div class="flex items-center gap-1.5 px-3 py-0.5 rounded-full shadow-[0_0_20px_rgba(255,215,0,0.45)] max-w-[96vw] truncate" style="background: linear-gradient(90deg, rgba(12,14,22,0.88) 0%, rgba(35,16,42,0.88) 50%, rgba(12,14,22,0.88) 100%); border: 1px solid #FFD700;">
+                <span class="w-2 h-2 rounded-full bg-[#25F4EE] shadow-[0_0_6px_#25F4EE] shrink-0"></span>
+                <span class="text-[9px] sm:text-[11px] font-black tracking-wider text-white uppercase truncate">
+                    🏆 <span class="text-[#FFD700]">TIKTOK LIVE FEST 2026</span> • <span class="text-[#25F4EE]">MAKE LIVE COUNT</span>
+                </span>
+                <span id="livefest-ar-live-counter" class="text-[9px] font-black px-1.5 py-0.2 rounded-full text-slate-950 shrink-0" style="background: linear-gradient(90deg, #FFD700, #25F4EE);">14,500 PTS</span>
+            </div>
+        </div>
+
+        <!-- OVERLAY DE ESTALLIDO ESPECIAL DE TRANSMISIÓN TIKTOK LIVE FEST 2026 -->
+        <div id="livefest-2026-screen-fx" class="hidden fixed inset-0 pointer-events-none z-40 flex flex-col justify-between items-center p-4" style="box-shadow: inset 0 0 85px rgba(254, 44, 85, 0.65), inset 0 0 45px rgba(37, 244, 238, 0.65); border: 3px solid #FFD700;">
+            <div class="mt-24 rounded-2xl px-5 py-2.5 shadow-[0_0_45px_rgba(255,215,0,0.85)] text-center max-w-[92vw]" style="background: linear-gradient(135deg, rgba(10,12,20,0.96) 0%, rgba(40,12,35,0.96) 50%, rgba(10,18,28,0.96) 100%); border: 2px solid #FFD700;">
+                <div class="text-[11px] sm:text-sm font-black text-[#25F4EE] tracking-widest uppercase">🏆 TIKTOK LIVE FEST 2026 • MAKE LIVE COUNT 🏆</div>
+                <div class="text-sm sm:text-xl font-black text-white drop-shadow mt-0.5">🔥 ¡ESTALLIDO DOBLE X2 DE PUNTOS EN VIVO! 🔥</div>
+                <div id="livefest-fx-subtitle" class="text-[10px] font-black text-[#FFD700] mt-0.5">+2,000 PUNTOS DE CLASIFICACIÓN • LIGA DE TALENTO #LiveFest2026</div>
+            </div>
+        </div>
+
+        <!-- =========================================================================
+             🎛️ BARRA SUPERIOR MAESTRA ORDENADA PARA MÓVIL, FULLY KIOSK Y PC
+             Todos los grupos de botones cuentan con su propio botón Mostrar/Ocultar
+             para que jamás cubran la pantalla ni se salgan de los bordes en el móvil
+             ========================================================================= -->
+        <div id="top-master-hud-container" class="w-full px-2 pt-1.5 pb-1 flex flex-col gap-1.5 pointer-events-auto z-40">
             
-            <!-- PANEL IZQUIERDO: Identidad y Apariencia -->
-            <div class="flex flex-col gap-2">
-                <div class="glass-panel px-4 py-2 rounded-full flex items-center gap-3 w-fit">
-                    <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-pink-500 to-yellow-500 flex items-center justify-center font-bold text-lg text-black" id="user-avatar-letter">J</div>
-                    <div>
-                        <div class="text-sm font-bold flex items-center gap-1">
-                            <span id="ui-username">@Usuario</span>
-                            <span id="ui-role-badge" class="text-[9px] bg-slate-700 px-1.5 py-0.5 rounded text-gray-300">Dancer</span>
+            <!-- FILA 1: Identidad Compacta + Controles Globales (Sonido, Ocultar HUD, Salir) -->
+            <div class="flex items-center justify-between gap-1.5 w-full">
+                <div class="glass-panel px-2.5 py-1 rounded-full flex items-center gap-2 min-w-0 max-w-[62vw] sm:max-w-md border border-cyan-500/40">
+                    <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gradient-to-tr from-pink-500 to-yellow-500 flex items-center justify-center font-black text-xs sm:text-sm text-black shrink-0" id="user-avatar-letter">J</div>
+                    <div class="min-w-0">
+                        <div class="text-[11px] sm:text-xs font-bold flex items-center gap-1 truncate">
+                            <span id="ui-username" class="truncate">@Usuario</span>
+                            <span id="ui-role-badge" class="text-[8px] bg-slate-700 px-1 py-0.2 rounded text-gray-300 shrink-0">Dancer</span>
                         </div>
-                        <div class="text-[10px] text-emerald-400 font-bold uppercase tracking-wider flex items-center gap-1">
-                            <span>🎪 Acto Circo:</span>
-                            <span id="active-step-indicator" class="text-cyan-300 font-black">Pose Maestro Cirquero</span>
+                        <div class="text-[8px] sm:text-[9px] text-emerald-400 font-bold uppercase tracking-wider flex items-center gap-1 truncate">
+                            <span>🎪</span>
+                            <span id="active-step-indicator" class="text-cyan-300 font-black truncate">Pose Maestro Cirquero</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- 🏆 STICKER & META INTERACTIVA REAL DE TIKTOK LIVE FEST 2026 ("Make LIVE Count" • Diseño Oficial TikTok LIVE) -->
-                <div id="livefest-2026-widget" class="mt-1 rounded-2xl p-2.5 max-w-[335px] pointer-events-auto relative overflow-hidden" style="background: linear-gradient(135deg, rgba(14, 15, 22, 0.96) 0%, rgba(28, 18, 38, 0.95) 55%, rgba(16, 22, 34, 0.96) 100%); border: 1.5px solid rgba(255, 215, 0, 0.85); box-shadow: 0 6px 28px rgba(0,0,0,0.75), 0 0 18px rgba(254, 44, 85, 0.35), inset 0 0 12px rgba(37, 244, 238, 0.18);">
-                    <!-- Franja Superior Neon Glitch Oficial TikTok (#25F4EE + #FE2C55 + #FFD700) -->
-                    <div class="absolute top-0 left-0 right-0 h-1" style="background: linear-gradient(90deg, #25F4EE 0%, #FE2C55 50%, #FFD700 100%);"></div>
+                <!-- Botones Globales Rápidos: Sonido, Ocultar Todo y Salir -->
+                <div class="flex items-center gap-1 shrink-0">
+                    <button onclick="toggleSoundEffects()" id="btn-sound-toggle" class="glass-panel px-2 py-1 rounded-lg flex items-center gap-1 text-[10px] font-bold text-emerald-300 border border-emerald-500/40 hover:bg-emerald-900/40 transition-colors" title="Activar/Desactivar Sonidos">
+                        <span>🔊</span> <span class="hidden sm:inline">SFX ON</span>
+                    </button>
+                    <button onclick="toggleAllHudPanelsVisibility()" id="btn-hide-all-hud" class="glass-panel px-2 py-1 rounded-lg flex items-center gap-1 text-[10px] font-black text-cyan-300 border border-cyan-400/50 hover:bg-cyan-900/40 transition-colors" title="Ocultar todos los botones para vista limpia en Fully Kiosk / Live">
+                        <span>👁️</span> <span class="hidden sm:inline">Limpiar</span>
+                    </button>
+                    <button onclick="logout()" class="glass-panel px-2 py-1 rounded-lg flex items-center gap-1 text-[10px] font-bold text-red-400 hover:text-white hover:bg-red-500/50 transition-colors border border-red-500/30" title="Cerrar Sesión">
+                        <span>🚪</span> <span class="hidden sm:inline">Salir</span>
+                    </button>
+                </div>
+            </div>
 
+            <!-- FILA 2: BARRA ORDENADA DE BOTONES MOSTRAR / OCULTAR PARA ACCEDER A TODAS LAS FUNCIONES EN MÓVIL Y FULLY -->
+            <div class="grid grid-cols-3 sm:flex sm:flex-wrap items-center justify-center gap-1 w-full">
+                <button onclick="toggleQuickFunctionsDrawer()" id="btn-toggle-quick-funcs" class="glass-panel px-2 py-1.5 rounded-lg text-[9px] sm:text-[10px] font-black text-amber-300 border border-amber-400/60 hover:bg-amber-900/40 transition-all flex items-center justify-center gap-1 shadow">
+                    <span>🎛️</span> Funciones ▼
+                </button>
+                <button onclick="toggleCustomPanel()" id="btn-toggle-custom" class="glass-panel px-2 py-1.5 rounded-lg text-[9px] sm:text-[10px] font-black text-cyan-300 border border-cyan-400/60 hover:bg-cyan-900/40 transition-all flex items-center justify-center gap-1 shadow">
+                    <span>👗</span> Personajes ▼
+                </button>
+                <button onclick="toggleGroupChoreoMenu()" id="btn-toggle-group-choreo" class="bg-gradient-to-r from-pink-600/90 to-amber-500/90 text-white px-2 py-1.5 rounded-lg text-[9px] sm:text-[10px] font-black border border-amber-300/80 transition-all flex items-center justify-center gap-1 shadow">
+                    <span>🎁</span> Regalos 5X ▼
+                </button>
+                <button onclick="toggleSuperGiftsMenu()" id="btn-toggle-super-gifts" class="bg-gradient-to-r from-cyan-700/90 to-indigo-700/90 text-cyan-100 px-2 py-1.5 rounded-lg text-[9px] sm:text-[10px] font-black border border-cyan-400/60 transition-all flex items-center justify-center gap-1 shadow">
+                    <span>🤸</span> VIP 30 ▼
+                </button>
+                <button onclick="toggleLiveFestAndProgressPanel()" id="btn-toggle-livefest-panel" class="glass-panel px-2 py-1.5 rounded-lg text-[9px] sm:text-[10px] font-black text-[#FFD700] border border-yellow-400/70 hover:bg-yellow-900/30 transition-all flex items-center justify-center gap-1 shadow">
+                    <span>🏆</span> LiveFest ▼
+                </button>
+                <button onclick="toggleEffectsPanel()" id="btn-toggle-effects" class="glass-panel px-2 py-1.5 rounded-lg text-[9px] sm:text-[10px] font-black text-pink-300 border border-pink-400/60 hover:bg-pink-900/40 transition-all flex items-center justify-center gap-1 shadow">
+                    <span>📢</span> DJ / Letreros ▼
+                </button>
+            </div>
+
+            <!-- =====================================================================
+                 CAJÓN 1: TODAS LAS FUNCIONES Y ACCIONES DEL ESPECTÁCULO (MOSTRAR / OCULTAR)
+                 Ordenado en cuadrícula responsiva con scroll para que todos los botones
+                 aparezcan completos en pantallas móviles y Fully Kiosk Browser
+                 ===================================================================== -->
+            <div id="quick-functions-drawer" class="hidden glass-panel p-2.5 rounded-2xl border border-amber-400/70 shadow-[0_10px_35px_rgba(0,0,0,0.85)] w-full max-w-2xl mx-auto max-h-[66vh] overflow-y-auto">
+                <div class="flex items-center justify-between border-b border-slate-700 pb-1.5 mb-2">
+                    <span class="text-[10px] font-black text-amber-300 uppercase tracking-wider">🎛️ Panel de Funciones y Espectáculo (Móvil & Fully)</span>
+                    <button onclick="toggleQuickFunctionsDrawer()" class="bg-rose-600/80 hover:bg-rose-500 text-white text-[10px] font-black px-2.5 py-0.5 rounded-lg">✕ Ocultar</button>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
+                    <button onclick="triggerLiveFest2026Effect(1500, '¡Impulso de Campaña #LiveFest2026!')" id="btn-livefest-2026" class="bg-gradient-to-r from-amber-400 via-yellow-300 to-cyan-400 text-slate-950 px-2.5 py-2 rounded-xl text-[10px] font-black shadow border border-white flex items-center justify-center gap-1 text-center">
+                        <span>🏆</span> Efecto #LiveFest2026
+                    </button>
+                    <button onclick="triggerVivaBoliviaSurprise()" id="btn-viva-bolivia" class="bg-gradient-to-r from-red-600 via-yellow-400 to-emerald-600 text-slate-950 px-2.5 py-2 rounded-xl text-[10px] font-black shadow border border-white flex items-center justify-center gap-1 text-center">
+                        <span>🇧🇴</span> ¡VIVA BOLIVIA & SCZ!
+                    </button>
+                    <button onclick="toggleHalloween()" id="btn-barbie-cine-mode" class="btn-halloween bg-gradient-to-r from-pink-500 via-fuchsia-500 to-amber-300 text-slate-950 px-2.5 py-2 rounded-xl text-[10px] font-black shadow border border-white flex items-center justify-center gap-1 text-center">
+                        💖 Modo Barbie & Cine ✨
+                    </button>
+                    <button onclick="cycleBoliviaDepartment()" id="btn-dept-cycle" class="bg-gradient-to-r from-emerald-600 via-teal-600 to-sky-600 text-white px-2.5 py-2 rounded-xl text-[10px] font-black shadow border border-emerald-300/80 flex items-center justify-center gap-1 text-center">
+                        🏞️ Stage 1/10: Santa Cruz
+                    </button>
+                    <button onclick="changeAvatar('modelo_pelada_camba')" id="btn-quick-camba" class="bg-gradient-to-r from-emerald-500 via-amber-300 to-emerald-500 text-slate-950 px-2.5 py-2 rounded-xl text-[10px] font-black shadow border border-white flex items-center justify-center gap-1 text-center">
+                        🌺 Pelada Camba
+                    </button>
+                    <button onclick="cycleBolivianFootballClub(true)" id="btn-quick-club" class="bg-gradient-to-r from-green-600 via-sky-500 to-yellow-400 text-slate-950 px-2.5 py-2 rounded-xl text-[10px] font-black shadow border border-white flex items-center justify-center gap-1 text-center">
+                        ⚽ Club: Oriente Petrolero
+                    </button>
+                    <button onclick="cycleFashionLedShowMode()" id="btn-led-runway-mode" class="bg-gradient-to-r from-pink-600 via-amber-500 to-fuchsia-600 text-white px-2.5 py-2 rounded-xl text-[10px] font-black shadow border border-yellow-300/80 flex items-center justify-center gap-1 text-center">
+                        📺 Mini-LED Publicidad
+                    </button>
+                    <button onclick="triggerGranPresentacion()" class="btn-presentacion bg-gradient-to-r from-cyan-600 to-purple-600 text-white px-2.5 py-2 rounded-xl text-[10px] font-black shadow border border-cyan-400 flex items-center justify-center gap-1 text-center">
+                        🎉 Gran Presentación
+                    </button>
+                    <button onclick="toggleArgonShowSetupModal()" id="btn-argon-show-setup" class="bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 text-white px-2.5 py-2 rounded-xl text-[10px] font-black shadow border border-cyan-200/90 flex items-center justify-center gap-1 text-center">
+                        <span>🎪</span> Setup Espectáculo
+                    </button>
+                    <button onclick="toggleStageSetupModal()" id="btn-stage-memory" class="glass-panel px-2.5 py-2 rounded-xl text-[10px] font-black text-amber-300 border border-amber-400/60 flex items-center justify-center gap-1 text-center">
+                        <span>🇧🇴</span> Memoria Stage 1/10
+                    </button>
+                    <button onclick="advanceToNextStageAutoLogin()" id="btn-return-stage1-top" class="bg-gradient-to-r from-rose-600 via-pink-600 to-amber-500 text-white px-2.5 py-2 rounded-xl flex items-center justify-center gap-1 text-[10px] font-black shadow border border-yellow-300/80 text-center">
+                        <span>⏭️</span> Ir al Stage 2 (Auto-Login)
+                    </button>
+                    <button onclick="toggleDancePanel()" class="bg-slate-800 hover:bg-slate-700 text-cyan-300 px-2.5 py-2 rounded-xl text-[10px] font-black border border-cyan-400/50 flex items-center justify-center gap-1 text-center">
+                        <span>🤹</span> Mostrar/Ocultar 20 Pasos
+                    </button>
+                </div>
+            </div>
+
+            <!-- =====================================================================
+                 CAJÓN 2: MENÚ DE PERSONAJES, 10 STAGES Y SHOW TRÍO LIVE (MOSTRAR / OCULTAR)
+                 ===================================================================== -->
+            <div id="custom-panel" class="flex flex-col gap-2 transform transition-all duration-300 origin-top scale-y-0 opacity-0 h-0 overflow-hidden w-full max-w-2xl mx-auto">
+                <div class="glass-panel p-2.5 rounded-2xl border border-emerald-400/80 shadow-[0_10px_35px_rgba(0,0,0,0.85)] max-h-[66vh] overflow-y-auto flex flex-col gap-2">
+                    <div class="flex items-center justify-between border-b border-slate-700 pb-1">
+                        <span id="stage-cast-title-badge" class="text-[10px] font-black text-emerald-300 uppercase">👑 Stage 1 (Santa Cruz) • Modelos de Alto Glamour:</span>
+                        <button onclick="toggleCustomPanel()" class="bg-rose-600/80 hover:bg-rose-500 text-white text-[10px] font-black px-2.5 py-0.5 rounded-lg">✕ Ocultar</button>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-1.5 justify-center items-center">
+                        <button id="btn-char-camba" onclick="changeAvatar('modelo_pelada_camba')" class="bg-gradient-to-r from-emerald-500 via-white to-emerald-500 px-2.5 py-1.5 rounded-lg text-[10px] font-black text-slate-950 shadow border border-yellow-300">🌺 Modelo Pelada Camba (Casual SCZ)</button>
+                        <button id="btn-char-futbol" onclick="changeAvatar('modelo_futbol_bolivia')" class="bg-gradient-to-r from-green-600 via-cyan-500 to-amber-400 px-2.5 py-1.5 rounded-lg text-[10px] font-black text-slate-950 shadow border border-white/90">⚽ Modelo Clubes de Bolivia</button>
+                        <button onclick="cycleBolivianFootballClub()" id="btn-club-selector" class="bg-slate-900 hover:bg-slate-800 text-amber-300 px-2.5 py-1.5 rounded-lg text-[10px] font-black border border-amber-400/80 shadow">⚽ Club: Oriente Petrolero (Cambiar)</button>
+                        <button id="btn-char-emperatriz" onclick="changeAvatar('emperatriz_bolivia_24k')" class="bg-gradient-to-r from-yellow-400 via-amber-500 to-rose-500 px-2.5 py-1.5 rounded-lg text-[10px] font-black text-slate-950 shadow border border-white/90">👑 Emperatriz Esmeralda 24K</button>
+                        <button id="btn-char-emperador" onclick="changeAvatar('emperador_titan_24k')" class="bg-gradient-to-r from-blue-700 via-indigo-600 to-amber-400 px-2.5 py-1.5 rounded-lg text-[10px] font-black text-white shadow border border-yellow-200/90">🦁 Gala Imperial Zafiro 24K</button>
+                        <button id="btn-char-carnaval" onclick="changeAvatar('diosa_carnaval_cristal')" class="bg-gradient-to-r from-emerald-500 via-teal-400 to-fuchsia-500 px-2.5 py-1.5 rounded-lg text-[10px] font-black text-slate-950 shadow border border-white/90">🪶 Reina Carnaval Couture</button>
+                        <button id="btn-char-astro" onclick="changeAvatar('astro_platino_laser')" class="bg-gradient-to-r from-fuchsia-600 via-purple-600 to-cyan-400 px-2.5 py-1.5 rounded-lg text-[10px] font-black text-white shadow border border-cyan-200/90">🎸 Top Model Platino Espejos</button>
+                        <button id="btn-char-musa" onclick="changeAvatar('musa_celestial_aurora')" class="bg-gradient-to-r from-purple-700 via-indigo-500 to-pink-400 px-2.5 py-1.5 rounded-lg text-[10px] font-black text-white shadow border border-pink-200/90">🌌 Musa Orquídea Couture</button>
+                        <div class="hidden">
+                            <button onclick="changeAvatar('toy_astro')">🚀 Guardián Juguete</button>
+                            <button onclick="changeAvatar('toy_fashion')">🎀 Muñeca Pop Glam</button>
+                            <button onclick="changeAvatar('hero_iron')">🛡️ Ciber-Héroe</button>
+                            <button onclick="changeAvatar('hero_arachnid')">🕷️ Héroe Acróbata</button>
+                            <button onclick="changeAvatar('movie_blockbuster')">🎬 Astro de Estreno</button>
+                            <button onclick="changeAvatar('chico')">👨 Urbano</button>
+                            <button onclick="changeAvatar('chica')">👩 Neón</button>
+                            <button onclick="changeAvatar('robot')">🤖 Bot</button>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900/80 p-2 rounded-xl border border-cyan-500/40">
+                        <div class="text-[9px] font-black text-cyan-300 uppercase mb-1 text-center">🏞️ Seleccionar Stage / Ciudad (Elenco Único por Stage):</div>
+                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-1">
+                            <button onclick="changeBoliviaDepartment(0)" class="bg-emerald-700 hover:bg-emerald-600 px-2 py-1 rounded text-[9px] font-bold text-white">1. Santa Cruz</button>
+                            <button onclick="changeBoliviaDepartment(1)" class="bg-sky-700 hover:bg-sky-600 px-2 py-1 rounded text-[9px] font-bold text-white">2. La Paz</button>
+                            <button onclick="changeBoliviaDepartment(2)" class="bg-teal-700 hover:bg-teal-600 px-2 py-1 rounded text-[9px] font-bold text-white">3. Cochabamba</button>
+                            <button onclick="changeBoliviaDepartment(3)" class="bg-cyan-700 hover:bg-cyan-600 px-2 py-1 rounded text-[9px] font-bold text-white">4. Potosí (Uyuni)</button>
+                            <button onclick="changeBoliviaDepartment(4)" class="bg-amber-700 hover:bg-amber-600 px-2 py-1 rounded text-[9px] font-bold text-white">5. Chuquisaca</button>
+                            <button onclick="changeBoliviaDepartment(5)" class="bg-rose-700 hover:bg-rose-600 px-2 py-1 rounded text-[9px] font-bold text-white">6. Oruro</button>
+                            <button onclick="changeBoliviaDepartment(6)" class="bg-purple-700 hover:bg-purple-600 px-2 py-1 rounded text-[9px] font-bold text-white">7. Tarija</button>
+                            <button onclick="changeBoliviaDepartment(7)" class="bg-green-700 hover:bg-green-600 px-2 py-1 rounded text-[9px] font-bold text-white">8. Beni</button>
+                            <button onclick="changeBoliviaDepartment(8)" class="bg-lime-700 hover:bg-lime-600 px-2 py-1 rounded text-[9px] font-bold text-white">9. Pando</button>
+                            <button onclick="changeBoliviaDepartment(9)" class="bg-gradient-to-r from-red-600 via-yellow-500 to-emerald-600 px-2 py-1 rounded text-[9px] font-black text-slate-950 border border-white">10. Gala Bolivia</button>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900/80 p-2 rounded-xl flex flex-wrap gap-1.5 justify-center items-center border border-amber-400/50">
+                        <span class="text-[9px] font-black text-amber-300 uppercase">Show Trío Live:</span>
+                        <button onclick="triggerTrioLiveAction('suscribete')" class="bg-gradient-to-r from-rose-600 to-pink-600 text-white px-2.5 py-1 rounded-lg text-[9px] font-black shadow border border-pink-300/50 flex items-center gap-1">
+                            <span class="kbd-badge">O</span>🔔 Suscríbete
+                        </button>
+                        <button onclick="triggerTrioLiveAction('like')" class="bg-gradient-to-r from-cyan-600 to-blue-600 text-white px-2.5 py-1 rounded-lg text-[9px] font-black shadow border border-cyan-300/50 flex items-center gap-1">
+                            <span class="kbd-badge">P</span>❤️ Dale Like
+                        </button>
+                        <button onclick="triggerTrioLiveAction('comparte')" class="bg-gradient-to-r from-amber-500 to-orange-600 text-white px-2.5 py-1 rounded-lg text-[9px] font-black shadow border border-amber-300/50 flex items-center gap-1">
+                            📲 Comparte
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- =====================================================================
+                 CAJÓN 3: STICKER OFICIAL TIKTOK LIVE FEST 2026 & MEMORIA DEL STAGE (MOSTRAR / OCULTAR)
+                 ===================================================================== -->
+            <div id="livefest-progress-drawer" class="hidden flex-col gap-2 items-center w-full max-w-xl mx-auto">
+                <!-- 🏆 STICKER & META INTERACTIVA REAL DE TIKTOK LIVE FEST 2026 ("Make LIVE Count") -->
+                <div id="livefest-2026-widget" class="rounded-2xl p-2.5 w-full pointer-events-auto relative overflow-hidden" style="background: linear-gradient(135deg, rgba(14, 15, 22, 0.96) 0%, rgba(28, 18, 38, 0.95) 55%, rgba(16, 22, 34, 0.96) 100%); border: 1.5px solid rgba(255, 215, 0, 0.85); box-shadow: 0 6px 28px rgba(0,0,0,0.75);">
+                    <div class="absolute top-0 left-0 right-0 h-1" style="background: linear-gradient(90deg, #25F4EE 0%, #FE2C55 50%, #FFD700 100%);"></div>
                     <div class="flex items-center justify-between gap-2">
-                        <!-- Emblema Vectorial SVG Real del Trofeo & Nota Musical TikTok LIVE Fest -->
                         <div class="flex items-center gap-2">
-                            <div class="relative w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style="background: radial-gradient(circle at 30% 30%, #3b270c, #0f1016); border: 1.5px solid #ffd700; box-shadow: 0 0 12px rgba(255,215,0,0.55);">
+                            <div class="relative w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style="background: radial-gradient(circle at 30% 30%, #3b270c, #0f1016); border: 1.5px solid #ffd700;">
                                 <svg viewBox="0 0 64 64" class="w-8 h-8">
                                     <defs>
                                         <linearGradient id="ttGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -474,45 +653,42 @@
                                             <stop offset="100%" stop-color="#B4690E"/>
                                         </linearGradient>
                                     </defs>
-                                    <!-- Copa Trofeo LIVE Fest Dorada -->
                                     <path d="M18 12 H46 V24 C46 33 39 39 32 39 C25 39 18 33 18 24 Z" fill="url(#ttGoldGrad)" stroke="#FFF" stroke-width="1.5"/>
-                                    <!-- Asas del Trofeo -->
                                     <path d="M18 16 H11 C11 25 14 29 19 30" fill="none" stroke="#25F4EE" stroke-width="3" stroke-linecap="round"/>
                                     <path d="M46 16 H53 C53 25 50 29 45 30" fill="none" stroke="#FE2C55" stroke-width="3" stroke-linecap="round"/>
-                                    <!-- Pedestal -->
                                     <rect x="29" y="39" width="6" height="9" fill="url(#ttGoldGrad)"/>
                                     <rect x="20" y="48" width="24" height="6" rx="2.5" fill="url(#ttGoldGrad)" stroke="#FFF" stroke-width="1"/>
-                                    <!-- Nota Musical TikTok Glitch en el Centro del Trofeo -->
                                     <path d="M35 17 V28.5 C35 31 33 33 30.5 33 C28 33 26 31 26 28.5 C26 26 28 24 30.5 24 C31.2 24 31.8 24.2 32.3 24.5 V15 H36 C36 17.5 38 19.5 40.5 19.5 V22.5 C38.2 22.5 36.2 21.3 35 19.5 Z" fill="#FE2C55" transform="translate(1.2, 0.8)"/>
                                     <path d="M35 17 V28.5 C35 31 33 33 30.5 33 C28 33 26 31 26 28.5 C26 26 28 24 30.5 24 C31.2 24 31.8 24.2 32.3 24.5 V15 H36 C36 17.5 38 19.5 40.5 19.5 V22.5 C38.2 22.5 36.2 21.3 35 19.5 Z" fill="#25F4EE" transform="translate(-1.2, -0.8)"/>
                                     <path d="M35 17 V28.5 C35 31 33 33 30.5 33 C28 33 26 31 26 28.5 C26 26 28 24 30.5 24 C31.2 24 31.8 24.2 32.3 24.5 V15 H36 C36 17.5 38 19.5 40.5 19.5 V22.5 C38.2 22.5 36.2 21.3 35 19.5 Z" fill="#FFFFFF"/>
                                 </svg>
                                 <span class="absolute -bottom-1 -right-1 bg-[#FE2C55] text-white text-[7px] font-black px-1 rounded uppercase shadow">2026</span>
                             </div>
-
                             <div>
                                 <div class="flex items-center gap-1.5">
                                     <span class="text-[11px] font-black tracking-tight text-white">TikTok <span class="text-[#FFD700]">LIVE FEST</span></span>
-                                    <span class="text-[8px] font-black px-1.5 py-0.5 rounded bg-gradient-to-r from-[#FE2C55] to-[#ff6b8b] text-white uppercase tracking-wider">Make LIVE Count</span>
+                                    <span class="text-[8px] font-black px-1.5 py-0.5 rounded bg-gradient-to-r from-[#FE2C55] to-[#ff6b8b] text-white uppercase">Make LIVE Count</span>
                                 </div>
                                 <div class="flex items-center gap-1 mt-0.5">
-                                    <span id="livefest-league-badge" onclick="cycleLiveFestLeague()" class="cursor-pointer text-[9px] font-extrabold text-[#25F4EE] hover:underline" title="Clic para cambiar Liga Oficial de LIVE Fest">🏆 Liga de Talento • #1 BO</span>
+                                    <span id="livefest-league-badge" onclick="cycleLiveFestLeague()" class="cursor-pointer text-[9px] font-extrabold text-[#25F4EE] hover:underline">🏆 Liga de Talento • #1 BO</span>
                                     <span class="text-[8px] font-black text-amber-300 bg-amber-950/90 border border-amber-400/50 px-1 rounded">⚡ Estallido x2</span>
                                 </div>
                             </div>
                         </div>
 
                         <div class="flex flex-col gap-1 items-end">
-                            <button onclick="triggerLiveFest2026Effect(2000, '¡Estallido Doble LIVE Fest 2026!')" class="px-2.5 py-1 rounded-lg text-[9px] font-black text-slate-950 shadow-md transition-transform active:scale-95 whitespace-nowrap" style="background: linear-gradient(90deg, #25F4EE 0%, #FFD700 55%, #FE2C55 100%); border: 1px solid #fff;">
-                                🏆 +VOTOS FEST
-                            </button>
+                            <div class="flex items-center gap-1">
+                                <button onclick="triggerLiveFest2026Effect(2000, '¡Estallido Doble LIVE Fest 2026!')" class="px-2 py-1 rounded-lg text-[9px] font-black text-slate-950 shadow whitespace-nowrap" style="background: linear-gradient(90deg, #25F4EE 0%, #FFD700 55%, #FE2C55 100%); border: 1px solid #fff;">
+                                    🏆 +VOTOS FEST
+                                </button>
+                                <button onclick="toggleLiveFestAndProgressPanel()" class="bg-rose-600/80 text-white text-[9px] font-black px-2 py-1 rounded-lg">✕</button>
+                            </div>
                             <button onclick="toggleLiveFestArFilter()" id="btn-livefest-ar-status" class="text-[8px] font-bold text-emerald-300 bg-emerald-950/90 border border-emerald-400/60 px-1.5 py-0.5 rounded">
                                 ✨ Filtro AR: ON
                             </button>
                         </div>
                     </div>
 
-                    <!-- Barra Oficial de Meta de Regalos del Fest y Votos Diarios -->
                     <div class="mt-1.5 bg-black/70 rounded-lg p-1.5 border border-white/10">
                         <div class="flex items-center justify-between text-[9px] font-extrabold mb-1">
                             <span class="text-gray-200 flex items-center gap-1">
@@ -524,334 +700,135 @@
                         <div class="w-full bg-slate-900 h-2.5 rounded-full overflow-hidden p-0.5 border border-amber-400/40">
                             <div id="livefest-progress-bar" class="h-full rounded-full transition-all duration-300" style="width: 29%; background: linear-gradient(90deg, #25F4EE 0%, #FE2C55 50%, #FFD700 100%);"></div>
                         </div>
-                        <div class="flex items-center justify-between text-[8px] font-bold text-gray-300 mt-1">
-                            <span class="text-[#25F4EE]">🔥 Hora de Bonus Oficial: Puntos Dobles</span>
-                            <span class="text-amber-300">🎁 Envía Fest Pop / Rosa</span>
-                        </div>
                     </div>
                 </div>
 
-                <!-- ✨ FILTRO AR OFICIAL INCRUSTADO DE TIKTOK LIVE FEST 2026 EN PANTALLA (EL QUE PIDE TIKTOK EN TRANSMISIÓN PARA SUMAR PUNTOS) -->
-                <div id="livefest-2026-ar-filter" class="fixed inset-x-0 top-14 pointer-events-none z-30 flex flex-col items-center">
-                    <div class="flex items-center gap-2.5 px-4 py-1 rounded-full shadow-[0_0_25px_rgba(255,215,0,0.55)]" style="background: linear-gradient(90deg, rgba(12,14,22,0.92) 0%, rgba(35,16,42,0.92) 50%, rgba(12,14,22,0.92) 100%); border: 1.5px solid #FFD700;">
-                        <span class="w-2.5 h-2.5 rounded-full bg-[#25F4EE] shadow-[0_0_8px_#25F4EE]"></span>
-                        <span class="text-[10px] sm:text-xs font-black tracking-wider text-white uppercase">
-                            🏆 EFECTO OFICIAL <span class="text-[#FFD700]">TIKTOK LIVE FEST 2026</span> ACTIVO • <span class="text-[#25F4EE]">MAKE LIVE COUNT</span>
-                        </span>
-                        <span id="livefest-ar-live-counter" class="text-[10px] font-black px-2 py-0.5 rounded-full text-slate-950" style="background: linear-gradient(90deg, #FFD700, #25F4EE);">14,500 PTS</span>
-                    </div>
-                </div>
-
-                <!-- OVERLAY DE ESTALLIDO ESPECIAL DE TRANSMISIÓN TIKTOK LIVE FEST 2026 -->
-                <div id="livefest-2026-screen-fx" class="hidden fixed inset-0 pointer-events-none z-40 flex flex-col justify-between items-center p-4" style="box-shadow: inset 0 0 85px rgba(254, 44, 85, 0.65), inset 0 0 45px rgba(37, 244, 238, 0.65); border: 3px solid #FFD700;">
-                    <div class="mt-24 rounded-2xl px-6 py-3 shadow-[0_0_45px_rgba(255,215,0,0.85)] text-center" style="background: linear-gradient(135deg, rgba(10,12,20,0.96) 0%, rgba(40,12,35,0.96) 50%, rgba(10,18,28,0.96) 100%); border: 2px solid #FFD700;">
-                        <div class="text-xs sm:text-sm font-black text-[#25F4EE] tracking-widest uppercase">🏆 TIKTOK LIVE FEST 2026 • MAKE LIVE COUNT 🏆</div>
-                        <div class="text-base sm:text-xl font-black text-white drop-shadow mt-0.5">🔥 ¡ESTALLIDO DOBLE X2 DE PUNTOS EN VIVO! 🔥</div>
-                        <div id="livefest-fx-subtitle" class="text-[11px] font-black text-[#FFD700] mt-0.5">+2,000 PUNTOS DE CLASIFICACIÓN • LIGA DE TALENTO #LiveFest2026</div>
-                    </div>
-                </div>
-
-                <!-- Menú Contraíble de Apariencia -->
-                <div class="flex flex-col gap-2 mt-1 z-30">
-                    <button onclick="toggleCustomPanel()" id="btn-toggle-custom" class="glass-panel w-fit px-3 py-1.5 rounded-lg flex items-center gap-2 text-[10px] font-bold text-cyan-300 border border-cyan-500/30 hover:bg-cyan-900/50 transition-colors shadow-lg">
-                        👗 Mostrar Menú de Apariencia ▼
-                    </button>
-                    
-                    <div id="custom-panel" class="flex flex-wrap gap-2 transform transition-all duration-300 origin-top scale-y-0 opacity-0 h-0 overflow-hidden">
-                        <div class="glass-panel px-3 py-1.5 rounded-xl flex flex-wrap gap-1.5 justify-center items-center border border-emerald-300/90 shadow-[0_0_25px_rgba(16,185,129,0.35)]">
-                            <span id="stage-cast-title-badge" class="text-[10px] font-black text-emerald-300 uppercase">👑 Stage 1 (Santa Cruz) • Modelos de Alto Glamour:</span>
-                            <button id="btn-char-camba" onclick="changeAvatar('modelo_pelada_camba')" class="bg-gradient-to-r from-emerald-500 via-white to-emerald-500 hover:from-emerald-400 hover:to-emerald-400 px-2.5 py-1 rounded-lg text-[10px] font-black text-slate-950 transition-colors shadow-md border border-yellow-300">🌺 Modelo Pelada Camba (Casual SCZ)</button>
-                            <button id="btn-char-futbol" onclick="changeAvatar('modelo_futbol_bolivia')" class="bg-gradient-to-r from-green-600 via-cyan-500 to-amber-400 hover:from-green-500 hover:to-amber-300 px-2.5 py-1 rounded-lg text-[10px] font-black text-slate-950 transition-colors shadow-md border border-white/90">⚽ Modelo Clubes de Bolivia</button>
-                            <button onclick="cycleBolivianFootballClub()" id="btn-club-selector" class="bg-slate-900 hover:bg-slate-800 text-amber-300 px-2.5 py-1 rounded-lg text-[10px] font-black border border-amber-400/80 shadow">⚽ Club: Oriente Petrolero (Cambiar)</button>
-                            <button id="btn-char-emperatriz" onclick="changeAvatar('emperatriz_bolivia_24k')" class="bg-gradient-to-r from-yellow-400 via-amber-500 to-rose-500 hover:from-yellow-300 hover:to-rose-400 px-2.5 py-1 rounded-lg text-[10px] font-black text-slate-950 transition-colors shadow-md border border-white/90">👑 Emperatriz Esmeralda 24K</button>
-                            <button id="btn-char-emperador" onclick="changeAvatar('emperador_titan_24k')" class="bg-gradient-to-r from-blue-700 via-indigo-600 to-amber-400 hover:from-blue-600 hover:to-amber-300 px-2.5 py-1 rounded-lg text-[10px] font-black text-white transition-colors shadow-md border border-yellow-200/90">🦁 Gala Imperial Zafiro 24K</button>
-                            <button id="btn-char-carnaval" onclick="changeAvatar('diosa_carnaval_cristal')" class="bg-gradient-to-r from-emerald-500 via-teal-400 to-fuchsia-500 hover:from-emerald-400 hover:to-fuchsia-400 px-2.5 py-1 rounded-lg text-[10px] font-black text-slate-950 transition-colors shadow-md border border-white/90">🪶 Reina Carnaval Couture</button>
-                            <button id="btn-char-astro" onclick="changeAvatar('astro_platino_laser')" class="bg-gradient-to-r from-fuchsia-600 via-purple-600 to-cyan-400 hover:from-fuchsia-500 hover:to-cyan-300 px-2.5 py-1 rounded-lg text-[10px] font-black text-white transition-colors shadow-md border border-cyan-200/90">🎸 Top Model Platino Espejos</button>
-                            <button id="btn-char-musa" onclick="changeAvatar('musa_celestial_aurora')" class="bg-gradient-to-r from-purple-700 via-indigo-500 to-pink-400 hover:from-purple-600 hover:to-pink-300 px-2.5 py-1 rounded-lg text-[10px] font-black text-white transition-colors shadow-md border border-pink-200/90">🌌 Musa Orquídea Couture</button>
-                            <!-- Botones de compatibilidad con otros Stages -->
-                            <div class="hidden">
-                                <button onclick="changeAvatar('toy_astro')">🚀 Guardián Juguete</button>
-                                <button onclick="changeAvatar('toy_fashion')">🎀 Muñeca Pop Glam</button>
-                                <button onclick="changeAvatar('hero_iron')">🛡️ Ciber-Héroe</button>
-                                <button onclick="changeAvatar('hero_arachnid')">🕷️ Héroe Acróbata</button>
-                                <button onclick="changeAvatar('movie_blockbuster')">🎬 Astro de Estreno</button>
-                                <button onclick="changeAvatar('chico')">👨 Urbano</button>
-                                <button onclick="changeAvatar('chica')">👩 Neón</button>
-                                <button onclick="changeAvatar('robot')">🤖 Bot</button>
-                            </div>
-                        </div>
-                        <div class="glass-panel px-3 py-1.5 rounded-xl flex flex-wrap gap-1 justify-center items-center border border-cyan-500/40">
-                            <span class="text-[10px] font-black text-cyan-300 uppercase">🏞️ 10 Stages & Dptos (Elenco Único por Stage):</span>
-                            <button onclick="changeBoliviaDepartment(0)" class="bg-emerald-700 hover:bg-emerald-600 px-2 py-0.5 rounded text-[9px] font-bold text-white">1. Santa Cruz</button>
-                            <button onclick="changeBoliviaDepartment(1)" class="bg-sky-700 hover:bg-sky-600 px-2 py-0.5 rounded text-[9px] font-bold text-white">2. La Paz</button>
-                            <button onclick="changeBoliviaDepartment(2)" class="bg-teal-700 hover:bg-teal-600 px-2 py-0.5 rounded text-[9px] font-bold text-white">3. Cochabamba</button>
-                            <button onclick="changeBoliviaDepartment(3)" class="bg-cyan-700 hover:bg-cyan-600 px-2 py-0.5 rounded text-[9px] font-bold text-white">4. Potosí (Uyuni)</button>
-                            <button onclick="changeBoliviaDepartment(4)" class="bg-amber-700 hover:bg-amber-600 px-2 py-0.5 rounded text-[9px] font-bold text-white">5. Chuquisaca</button>
-                            <button onclick="changeBoliviaDepartment(5)" class="bg-rose-700 hover:bg-rose-600 px-2 py-0.5 rounded text-[9px] font-bold text-white">6. Oruro</button>
-                            <button onclick="changeBoliviaDepartment(6)" class="bg-purple-700 hover:bg-purple-600 px-2 py-0.5 rounded text-[9px] font-bold text-white">7. Tarija</button>
-                            <button onclick="changeBoliviaDepartment(7)" class="bg-green-700 hover:bg-green-600 px-2 py-0.5 rounded text-[9px] font-bold text-white">8. Beni</button>
-                            <button onclick="changeBoliviaDepartment(8)" class="bg-lime-700 hover:bg-lime-600 px-2 py-0.5 rounded text-[9px] font-bold text-white">9. Pando</button>
-                            <button onclick="changeBoliviaDepartment(9)" class="bg-gradient-to-r from-red-600 via-yellow-500 to-emerald-600 px-2 py-0.5 rounded text-[9px] font-black text-slate-950 border border-white">10. Gala Bolivia</button>
-                        </div>
-                        <div class="glass-panel px-3 py-1.5 rounded-xl flex flex-wrap gap-1.5 justify-center items-center border border-amber-400/50 shadow-[0_0_15px_rgba(251,191,36,0.25)]">
-                            <span class="text-[10px] font-black text-amber-300 uppercase">Show Trío Live:</span>
-                            <button onclick="triggerTrioLiveAction('suscribete')" class="bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 text-white px-2.5 py-1 rounded-lg text-[10px] font-black transition-transform active:scale-95 shadow-md border border-pink-300/50 flex items-center gap-1">
-                                <span class="kbd-badge">O</span>🔔 Suscríbete
-                            </button>
-                            <button onclick="triggerTrioLiveAction('like')" class="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white px-2.5 py-1 rounded-lg text-[10px] font-black transition-transform active:scale-95 shadow-md border border-cyan-300/50 flex items-center gap-1">
-                                <span class="kbd-badge">P</span>❤️ Dale Like
-                            </button>
-                            <button onclick="triggerTrioLiveAction('comparte')" class="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white px-2.5 py-1 rounded-lg text-[10px] font-black transition-transform active:scale-95 shadow-md border border-amber-300/50 flex items-center gap-1">
-                                📲 Comparte a tus amigos
-                            </button>
-                        </div>
-                    </div>
+                <!-- HUD DE MEMORIA DEL STAGE (20 MINUTOS + TAREAS + SALTO DE STAGE) -->
+                <div id="stage-progress-hud" class="glass-panel px-3 py-2 rounded-2xl border border-amber-400/60 w-full flex flex-wrap items-center justify-center gap-2">
+                    <span class="bg-gradient-to-r from-red-600 via-yellow-400 to-emerald-600 text-slate-950 text-[9px] font-black px-2 py-0.5 rounded-full uppercase">🇧🇴 STAGE 1 / 10 (V2)</span>
+                    <span id="hud-origin-badge" class="text-[9px] font-bold text-emerald-300 bg-emerald-950/80 border border-emerald-500/40 px-1.5 py-0.5 rounded">🔗 Auto-Login OK</span>
+                    <span class="text-[10px] font-bold text-cyan-200">⏱️ <span id="hud-time-label">00:00 / 20:00</span></span>
+                    <span class="text-[10px] font-bold text-indigo-200">🎯 <span id="hud-tasks-label">0/300</span></span>
+                    <span class="text-[10px] font-bold text-pink-200">🎁 <span id="hud-group-label">0/200</span></span>
+                    <button onclick="toggleStageSetupModal()" class="bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-400/40 px-2 py-0.5 rounded-lg text-[9px] font-black">📊 Detalles</button>
+                    <button onclick="advanceToNextStageAutoLogin()" class="bg-gradient-to-r from-rose-600 to-amber-500 text-white font-black text-[9px] px-2.5 py-0.5 rounded-full shadow border border-yellow-200/70">⏭️ Ir al Stage 2</button>
+                    <button id="btn-hud-next-stage" onclick="proceedToNextStageRepo()" class="hidden bg-gradient-to-r from-yellow-400 via-amber-300 to-emerald-400 text-slate-950 font-black text-[9px] px-2.5 py-0.5 rounded-full animate-pulse shadow-lg">👑 CORONAR ➔</button>
                 </div>
             </div>
 
-            <!-- PANEL DERECHO: Salida, Sonido, Dinámicas y Menú Desplegable de Super Regalos -->
-            <div class="flex flex-col items-end gap-2 absolute top-4 right-4 md:static z-30 pointer-events-auto">
-                <div class="flex items-center gap-2">
-                    <!-- Control de Sonidos Sintetizados -->
-                    <button onclick="toggleSoundEffects()" id="btn-sound-toggle" class="glass-panel px-3 py-1.5 rounded-xl flex items-center gap-1.5 text-xs font-bold text-emerald-300 border border-emerald-500/40 hover:bg-emerald-900/40 transition-colors shadow-lg" title="Activar/Desactivar Efectos de Sonido">
-                        <span>🔊</span> <span class="hidden sm:inline">SFX ON</span>
-                    </button>
-
-                    <!-- BOTÓN DESTACADO: SETUP DIRECTOR DEL ESPECTÁCULO ARGON -->
-                    <button onclick="toggleArgonShowSetupModal()" id="btn-argon-show-setup" class="bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 text-white px-3 py-1.5 rounded-xl text-[11px] font-black shadow-[0_0_20px_rgba(34,211,238,0.55)] border border-cyan-200/90 hover:scale-105 transition-transform flex items-center gap-1" title="Abrir Setup Director del Espectáculo Argon">
-                        <span>🎪</span> Setup Espectáculo
-                    </button>
-
-                    <!-- NIVEL 3: REGALOS TIKTOK -> DEMOSTRACIÓN SUPREMA DE CIRCO 5X -->
-                    <button onclick="toggleGroupChoreoMenu()" id="btn-toggle-group-choreo" class="bg-gradient-to-r from-pink-600 via-fuchsia-600 to-amber-500 text-white px-3 py-1.5 rounded-xl text-[11px] font-black shadow-[0_0_20px_rgba(236,72,153,0.6)] border border-amber-300/80 hover:scale-105 transition-transform flex items-center gap-1">
-                        <span>🎁</span> Show Regalos 5X ▲
-                    </button>
-
-                    <!-- NIVEL 2: ACROBACIAS VIP & MALABARES EXTREMOS -->
-                    <button onclick="toggleSuperGiftsMenu()" id="btn-toggle-super-gifts" class="bg-gradient-to-r from-cyan-700 to-indigo-700 text-cyan-100 px-3 py-1.5 rounded-xl text-[11px] font-black shadow-lg border border-cyan-400/60 hover:scale-105 transition-transform flex items-center gap-1">
-                        <span>🤸</span> Acrobacias VIP ▼
-                    </button>
-
-                    <!-- Botón para ver el Setup de Memoria / Llave de Tiempo de 10 Stages -->
-                    <button onclick="toggleStageSetupModal()" id="btn-stage-memory" class="glass-panel px-2.5 py-1.5 rounded-xl text-[11px] font-black text-amber-300 border border-amber-400/50 hover:bg-amber-900/40 transition-colors flex items-center gap-1" title="Ver Llave de Tiempo de los 10 Stages">
-                        <span>🇧🇴</span> Stage 1/10 (V2)
-                    </button>
-
-                    <!-- NUEVO BOTÓN: REGRESAR AL STAGE 1 (AL PRINCIPIO DE LA SAGA) -->
-                    <button onclick="advanceToNextStageAutoLogin()" id="btn-return-stage1-top" class="bg-gradient-to-r from-rose-600 via-pink-600 to-amber-500 hover:from-rose-500 hover:to-amber-400 text-white px-3 py-1.5 rounded-xl flex items-center gap-1 text-[11px] font-black transition-transform hover:scale-105 active:scale-95 shadow-[0_0_15px_rgba(244,63,94,0.5)] border border-yellow-300/80" title="Pasar al Siguiente Stage con Auto-Logueo Automático (Sin pedir credenciales)">
-                        <span>⏭️</span> Ir al Stage 2 (Auto-Login)
-                    </button>
-
-                    <button onclick="logout()" class="glass-panel px-3 py-1.5 rounded-xl flex items-center gap-1.5 text-xs font-bold text-red-400 hover:text-white hover:bg-red-500/50 transition-colors shadow-lg border border-red-500/30">
-                        <span>🚪</span> Salir
-                    </button>
-                </div>
-
-                <!-- Botones Rápidos de Dinámicas Juveniles, Sorpresa VIVA BOLIVIA y Control de Desfile LED -->
-                <div class="flex flex-wrap justify-end gap-1.5 mt-0.5">
-                    <!-- NUEVO BOTÓN SORPRESA: "¡VIVA BOLIVIA!" + BANDERAS DE BOLIVIA Y SANTA CRUZ FLAMEANDO -->
-                    <button onclick="triggerLiveFest2026Effect(1500, '¡Impulso de Campaña #LiveFest2026!')" id="btn-livefest-2026" class="bg-gradient-to-r from-amber-400 via-yellow-300 to-cyan-400 text-slate-950 px-3 py-1 rounded-lg text-[11px] font-black shadow-[0_0_22px_rgba(250,204,21,0.9)] border-2 border-white hover:scale-105 active:scale-95 transition-transform flex items-center gap-1" title="Activar Efecto Oficial de Transmisión TikTok Live Fest 2026 para sumar puntos en la campaña">
-                        <span>🏆</span> Efecto #LiveFest2026 🔥
-                    </button>
-                    <button onclick="triggerVivaBoliviaSurprise()" id="btn-viva-bolivia" class="bg-gradient-to-r from-red-600 via-yellow-400 to-emerald-600 text-slate-950 px-3 py-1 rounded-lg text-[11px] font-black shadow-[0_0_20px_rgba(250,204,21,0.75)] border-2 border-white hover:scale-105 active:scale-95 transition-transform flex items-center gap-1" title="Activar Sorpresa Cinematográfica ¡VIVA BOLIVIA! y Banderas de Bolivia y Santa Cruz flameando">
-                        <span>🇧🇴</span> ¡Sorpresa VIVA BOLIVIA & Santa Cruz! 🟢⚪🟢
-                    </button>
-                    <button onclick="cycleBoliviaDepartment()" id="btn-dept-cycle" class="bg-gradient-to-r from-emerald-600 via-teal-600 to-sky-600 text-white px-2.5 py-1 rounded-lg text-[10px] font-black shadow-lg border border-emerald-300/80 hover:scale-105 transition-transform" title="Cambiar Paisaje entre los 9 Departamentos de Bolivia">
-                        🏞️ Paisaje: 1/9 Santa Cruz 🟢⚪🟢
-                    </button>
-                    <button onclick="changeAvatar('modelo_pelada_camba')" id="btn-quick-camba" class="bg-gradient-to-r from-emerald-500 via-amber-300 to-emerald-500 text-slate-950 px-2.5 py-1 rounded-lg text-[10px] font-black shadow-lg border border-white hover:scale-105 transition-transform" title="Activar Modelo Pelada Camba Casual / Personaje Animado en Modo Barbie">
-                        🌺 Pelada Camba
-                    </button>
-                    <button onclick="cycleBolivianFootballClub(true)" id="btn-quick-club" class="bg-gradient-to-r from-green-600 via-sky-500 to-yellow-400 text-slate-950 px-2.5 py-1 rounded-lg text-[10px] font-black shadow-lg border border-white hover:scale-105 transition-transform" title="Activar Modelo Futbolera y Cambiar Club (Oriente, Blooming, Strongest, Bolívar, Wilstermann, Always Ready)">
-                        ⚽ Modelo Club: Oriente Petrolero
-                    </button>
-                    <button onclick="cycleFashionLedShowMode()" id="btn-led-runway-mode" class="bg-gradient-to-r from-pink-600 via-amber-500 to-fuchsia-600 text-white px-2.5 py-1 rounded-lg text-[10px] font-black shadow-lg border border-yellow-300/80 hover:scale-105 transition-transform" title="Cambiar anuncio en la Pequeña Pantalla LED del Escenario">
-                        📺 Mini-LED Publicidad Stage 1
-                    </button>
-                    <button onclick="toggleHalloween()" id="btn-barbie-cine-mode" class="btn-halloween bg-gradient-to-r from-pink-500 via-fuchsia-500 to-amber-300 text-slate-950 px-3 py-1 rounded-lg text-[11px] font-black shadow-[0_0_20px_rgba(244,114,182,0.8)] border-2 border-white hover:scale-105 transition-transform">
-                        💖 Modo Barbie & Cine Pop-Glam ✨
-                    </button>
-                    <button onclick="triggerGranPresentacion()" class="btn-presentacion bg-gradient-to-r from-cyan-600 to-purple-600 text-white px-3 py-1 rounded-lg text-[11px] font-bold shadow-lg border border-cyan-400 hover:scale-105 transition-transform">
-                        🎉 Gran Presentación
-                    </button>
-                </div>
-
-                <!-- Menú Contraíble de Efectos y Publicidad -->
-                <div class="flex flex-col items-end gap-2 mt-0.5">
-                    <button onclick="toggleEffectsPanel()" id="btn-toggle-effects" class="glass-panel px-3 py-1 rounded-lg flex items-center gap-2 text-[10px] font-bold text-yellow-300 border border-yellow-500/30 hover:bg-yellow-900/50 transition-colors shadow-lg">
-                        ✨ Mostrar Menú DJ & Letreros 3D ▼
-                    </button>
-                    
-                    <div id="effects-panel" class="flex flex-col gap-2 transform transition-all duration-300 origin-top scale-y-0 opacity-0 h-0 overflow-hidden items-end">
-                        <!-- Formulario Pedir Canción -->
-                        <div class="glass-panel p-2 rounded-xl flex flex-col gap-1 border border-blue-500/30 w-full shadow-lg mb-1">
-                            <span class="text-[10px] font-bold text-blue-300 text-center">🎵 Pedir Canción al DJ</span>
-                            <div class="flex gap-1">
-                                <input type="text" id="song-request" placeholder="Nombre de tu canción..." class="w-full bg-slate-900/80 border border-slate-600 rounded px-2 py-1 text-xs text-white outline-none focus:border-blue-500">
-                                <button onclick="requestSong()" class="bg-blue-600 hover:bg-blue-500 px-2 py-1 rounded text-white text-xs font-bold transition-colors">Pedir</button>
-                            </div>
-                        </div>
-
-                        <!-- Botón para abrir el panel publicitario flotante HUD -->
-                        <button onclick="toggleAdPanel()" class="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 py-1.5 rounded-lg text-[10px] font-bold shadow-lg border border-yellow-300 hover:scale-105 transition-transform flex items-center gap-1 w-full justify-center">
-                            <span>📢</span> Letreros 3D (HUD)
-                        </button>
+            <!-- =====================================================================
+                 CAJÓN 4: MENÚ DJ, PEDIR CANCIÓN, LETREROS 3D Y ADMIN (MOSTRAR / OCULTAR)
+                 ===================================================================== -->
+            <div id="effects-panel" class="flex flex-col gap-2 transform transition-all duration-300 origin-top scale-y-0 opacity-0 h-0 overflow-hidden items-center w-full max-w-md mx-auto">
+                <div class="glass-panel p-2.5 rounded-2xl flex flex-col gap-2 border border-pink-500/50 w-full shadow-lg">
+                    <div class="flex items-center justify-between border-b border-slate-700 pb-1">
+                        <span class="text-[10px] font-black text-pink-300 uppercase">📢 Menú DJ, Canciones & Letreros 3D</span>
+                        <button onclick="toggleEffectsPanel()" class="bg-rose-600/80 text-white text-[9px] font-black px-2 py-0.5 rounded-lg">✕ Ocultar</button>
                     </div>
-                </div>
-
-                <div id="admin-controls" class="glass-panel p-3 rounded-xl hidden flex-col gap-2 border border-cyan-500/30 z-20 w-48 shadow-lg mt-1">
-                    <div class="text-xs font-bold text-cyan-400 uppercase tracking-wider text-center border-b border-gray-600 pb-1 mb-1" id="admin-panel-title">Panel DJ/Streamer</div>
-                    <div class="mt-1">
-                        <button onclick="openAdminModal()" class="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 px-3 py-1.5 rounded text-xs font-bold w-full shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-colors flex items-center justify-center gap-1">
-                            <span>⚙️</span> Gestionar Dancers
+                    <div class="flex gap-1">
+                        <input type="text" id="song-request" placeholder="Nombre de tu canción..." class="w-full bg-slate-900/90 border border-slate-600 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none focus:border-blue-500">
+                        <button onclick="requestSong()" class="bg-blue-600 hover:bg-blue-500 px-3 py-1.5 rounded-lg text-white text-xs font-bold">🎵 Pedir</button>
+                    </div>
+                    <button onclick="toggleAdPanel()" class="bg-gradient-to-r from-yellow-500 to-orange-500 text-slate-950 px-3 py-2 rounded-xl text-[10px] font-black shadow border border-yellow-300 flex items-center gap-1 w-full justify-center">
+                        <span>📢</span> Abrir / Editar Mis Letreros 3D (HUD)
+                    </button>
+                    <div id="admin-controls" class="hidden flex-col gap-1.5 pt-1 border-t border-slate-700 w-full">
+                        <div class="text-[10px] font-bold text-cyan-400 uppercase text-center" id="admin-panel-title">Panel DJ Principal</div>
+                        <button onclick="openAdminModal()" class="bg-gradient-to-r from-blue-600 to-cyan-500 px-3 py-1.5 rounded-xl text-xs font-bold text-white w-full shadow flex items-center justify-center gap-1">
+                            <span>⚙️</span> Gestionar Dancers / Usuarios
                         </button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- PANEL LATERAL PUBLICIDAD HUD -->
-        <div id="ad-panel" class="absolute left-4 top-48 glass-panel p-4 rounded-2xl border border-yellow-500/50 shadow-[0_0_20px_rgba(234,179,8,0.3)] z-40 flex-col gap-3 w-80 transform -translate-x-[150%] transition-transform duration-300 flex pointer-events-auto">
+        <!-- PANEL FLOTANTE DE PUBLICIDAD HUD (SE ABRE DESDE DJ/LETREROS) -->
+        <div id="ad-panel" class="fixed left-1/2 top-28 -translate-x-[250%] glass-panel p-3.5 rounded-2xl border border-yellow-500/70 shadow-[0_0_30px_rgba(234,179,8,0.45)] z-50 flex-col gap-2.5 w-[92vw] max-w-sm transition-transform duration-300 flex pointer-events-auto max-h-[72vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b border-gray-600 pb-2">
                 <div>
                     <h3 class="text-sm font-bold text-yellow-400">📢 Mis Letreros 3D</h3>
                     <p id="ad-owner-label" class="text-[9px] text-cyan-300 font-bold">Cuenta: @Usuario</p>
                 </div>
                 <div class="flex gap-2 items-center">
-                    <button id="btn-edit-ads" onclick="toggleEditAdsMode()" class="text-[10px] bg-slate-700 hover:bg-slate-600 px-2 py-1 rounded text-white font-bold transition-colors border border-yellow-400/40">⚙️ Editar</button>
-                    <button onclick="toggleAdPanel()" class="text-gray-400 hover:text-white text-lg leading-none">&times;</button>
+                    <button id="btn-edit-ads" onclick="toggleEditAdsMode()" class="text-[10px] bg-slate-700 hover:bg-slate-600 px-2 py-1 rounded text-white font-bold border border-yellow-400/40">⚙️ Editar</button>
+                    <button onclick="toggleAdPanel()" class="bg-rose-600/80 text-white px-2 py-0.5 rounded-lg text-xs font-bold">✕</button>
                 </div>
             </div>
             
             <div id="ad-view-mode" class="flex flex-col gap-2">
                 <p class="text-[10px] text-gray-300">Tus anuncios son exclusivos de tu cuenta y quedan guardados permanentemente.</p>
-                <div id="preset-ads-container" class="flex flex-col gap-2 max-h-[30vh] overflow-y-auto pr-1 mt-1">
-                    <button id="btn-preset-1" onclick="sendAd(this.innerText)" class="bg-slate-700/80 hover:bg-slate-600 text-left text-[10px] p-2 rounded border border-slate-500 transition-colors shadow-sm text-yellow-300 font-semibold">👍 Suscríbete al canal y deja tu like para apoyarnos</button>
-                    <button id="btn-preset-2" onclick="sendAd(this.innerText)" class="bg-slate-700/80 hover:bg-slate-600 text-left text-[10px] p-2 rounded border border-slate-500 transition-colors shadow-sm text-cyan-300 font-semibold">💼 Servicios Digitales Model Bolivia para plataformas comerciales</button>
-                    <button id="btn-preset-3" onclick="sendAd(this.innerText)" class="bg-slate-700/80 hover:bg-slate-600 text-left text-[10px] leading-tight p-2 rounded border border-slate-500 transition-colors shadow-sm text-pink-300 font-semibold">✨ Compra tu tratamiento estético dermatológico para aclarar la piel y obtén premios o beneficios por tus compras</button>
+                <div id="preset-ads-container" class="flex flex-col gap-1.5 max-h-[26vh] overflow-y-auto pr-1">
+                    <button id="btn-preset-1" onclick="sendAd(this.innerText)" class="bg-slate-700/80 hover:bg-slate-600 text-left text-[10px] p-2 rounded border border-slate-500 text-yellow-300 font-semibold">👍 Suscríbete al canal y deja tu like para apoyarnos</button>
+                    <button id="btn-preset-2" onclick="sendAd(this.innerText)" class="bg-slate-700/80 hover:bg-slate-600 text-left text-[10px] p-2 rounded border border-slate-500 text-cyan-300 font-semibold">💼 Servicios Digitales Model Bolivia para plataformas comerciales</button>
+                    <button id="btn-preset-3" onclick="sendAd(this.innerText)" class="bg-slate-700/80 hover:bg-slate-600 text-left text-[10px] leading-tight p-2 rounded border border-slate-500 text-pink-300 font-semibold">✨ Compra tu tratamiento estético dermatológico para aclarar la piel y obtén premios o beneficios por tus compras</button>
                 </div>
-                <div class="mt-2 border-t border-gray-600 pt-2">
-                    <textarea id="custom-ad-text" rows="2" class="w-full bg-slate-900 border border-slate-600 rounded p-2 text-xs text-white focus:border-yellow-500 outline-none resize-none" placeholder="Escribe tu anuncio libre (se guarda en tu cuenta)..."></textarea>
-                    <button onclick="sendCustomAd()" class="w-full mt-2 bg-gradient-to-r from-yellow-600 to-orange-500 hover:from-yellow-500 hover:to-orange-400 text-white text-xs font-bold py-2 rounded shadow-lg transition-colors active:scale-95 transform">Emitir y Guardar Letrero HUD 🚀</button>
+                <div class="mt-1 border-t border-gray-600 pt-2">
+                    <textarea id="custom-ad-text" rows="2" class="w-full bg-slate-900 border border-slate-600 rounded p-2 text-xs text-white focus:border-yellow-500 outline-none resize-none" placeholder="Escribe tu anuncio libre..."></textarea>
+                    <button onclick="sendCustomAd()" class="w-full mt-1.5 bg-gradient-to-r from-yellow-600 to-orange-500 text-white text-xs font-bold py-2 rounded-xl shadow-lg">Emitir y Guardar Letrero HUD 🚀</button>
                 </div>
             </div>
 
-            <!-- MODO DE EDICIÓN DE PUBLICIDAD PERSONAL POR JUGADOR -->
-            <div id="ad-edit-mode" class="hidden flex-col gap-2 max-h-[52vh] overflow-y-auto pr-1 pb-1">
+            <div id="ad-edit-mode" class="hidden flex-col gap-2 max-h-[50vh] overflow-y-auto pr-1 pb-1">
                 <p id="ad-edit-owner-label" class="text-[9px] text-emerald-300 uppercase tracking-widest font-bold">💾 Publicidad Exclusiva de @Usuario</p>
-                <label class="text-[10px] font-bold text-cyan-300 mt-1">Mi Letrero Principal 3D (Fondo):</label>
-                <input type="text" id="edit-main-sign" class="w-full bg-slate-900 border border-slate-600 rounded p-1.5 text-xs text-white" placeholder="MO-BOL DANCE CLUB">
-                <label class="text-[10px] font-bold text-pink-300 mt-1">Mis Banners Deslizantes (Separar con '|'):</label>
-                <textarea id="edit-banners" rows="3" class="w-full bg-slate-900 border border-slate-600 rounded p-1.5 text-xs text-white resize-none" placeholder="MI OFERTA 1 | MI OFERTA 2"></textarea>
-                <label class="text-[10px] font-bold text-yellow-300 mt-1">Mi Botón Rápido 1:</label>
+                <label class="text-[10px] font-bold text-cyan-300">Mi Letrero Principal 3D (Fondo):</label>
+                <input type="text" id="edit-main-sign" class="w-full bg-slate-900 border border-slate-600 rounded p-1.5 text-xs text-white">
+                <label class="text-[10px] font-bold text-pink-300">Mis Banners Deslizantes (Separar con '|'):</label>
+                <textarea id="edit-banners" rows="2" class="w-full bg-slate-900 border border-slate-600 rounded p-1.5 text-xs text-white resize-none"></textarea>
+                <label class="text-[10px] font-bold text-yellow-300">Mi Botón Rápido 1:</label>
                 <input type="text" id="edit-preset-1" class="w-full bg-slate-900 border border-slate-600 rounded p-1.5 text-xs text-white">
-                <label class="text-[10px] font-bold text-yellow-300 mt-1">Mi Botón Rápido 2:</label>
+                <label class="text-[10px] font-bold text-yellow-300">Mi Botón Rápido 2:</label>
                 <input type="text" id="edit-preset-2" class="w-full bg-slate-900 border border-slate-600 rounded p-1.5 text-xs text-white">
-                <label class="text-[10px] font-bold text-yellow-300 mt-1">Mi Botón Rápido 3:</label>
+                <label class="text-[10px] font-bold text-yellow-300">Mi Botón Rápido 3:</label>
                 <input type="text" id="edit-preset-3" class="w-full bg-slate-900 border border-slate-600 rounded p-1.5 text-xs text-white">
                 <div class="flex gap-2 mt-2">
-                    <button onclick="saveGlobalAds()" class="flex-1 bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white text-xs font-bold py-2 rounded shadow-lg">Guardar en Mi Cuenta 💾</button>
-                    <button onclick="toggleEditAdsMode()" class="flex-1 bg-gray-600 hover:bg-gray-500 text-white text-xs font-bold py-2 rounded shadow-lg">Cancelar</button>
+                    <button onclick="saveGlobalAds()" class="flex-1 bg-gradient-to-r from-emerald-600 to-teal-500 text-white text-xs font-bold py-2 rounded-xl shadow">Guardar 💾</button>
+                    <button onclick="toggleEditAdsMode()" class="flex-1 bg-gray-600 text-white text-xs font-bold py-2 rounded-xl shadow">Cancelar</button>
                 </div>
             </div>
         </div>
 
-        <!-- HUD COMPACTO DE MEMORIA DEL STAGE 10 GRAN FINAL (META: 20 MINUTOS + TAREAS + COREOGRAFÍAS GRUPALES) -->
-        <div id="stage-progress-hud" class="fixed top-12 left-1/2 transform -translate-x-1/2 z-30 pointer-events-auto glass-panel px-3 py-1.5 rounded-2xl border border-amber-400/60 shadow-[0_0_25px_rgba(250,204,21,0.35)] flex flex-wrap items-center justify-center gap-2 sm:gap-3 max-w-[95vw]">
-            <div class="flex items-center gap-1.5">
-                <span class="bg-gradient-to-r from-red-600 via-yellow-400 to-emerald-600 text-slate-950 text-[9px] font-black px-2 py-0.5 rounded-full uppercase">🇧🇴 STAGE 1 / 10 (NUEVA VERSIÓN)</span>
-                <span id="hud-origin-badge" class="text-[9px] font-bold text-emerald-300 bg-emerald-950/80 border border-emerald-500/40 px-1.5 py-0.5 rounded">🔗 Vínculo OK</span>
-            </div>
-            <div class="flex items-center gap-1 text-[10px] font-bold text-cyan-200" title="Tiempo activo requerido en el Stage 10 (20 minutos)">
-                <span>⏱️</span>
-                <span id="hud-time-label">00:00 / 20:00</span>
-            </div>
-            <div class="flex items-center gap-1 text-[10px] font-bold text-indigo-200" title="Tareas de pasos ejecutadas">
-                <span>🎯 Tareas:</span>
-                <span id="hud-tasks-label">0/300</span>
-            </div>
-            <div class="flex items-center gap-1 text-[10px] font-bold text-pink-200" title="Coreografías Grupales con Regalos TikTok">
-                <span>🎁 Coreo Grupo:</span>
-                <span id="hud-group-label">0/200</span>
-            </div>
-            <button onclick="toggleStageSetupModal()" class="bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-400/40 px-2 py-0.5 rounded-lg text-[9px] font-black transition-colors">
-                📊 Memoria & Trofeo
-            </button>
-            <button onclick="returnToStage1Start()" class="bg-gradient-to-r from-rose-600 to-amber-500 hover:from-rose-500 hover:to-amber-400 text-white font-black text-[9px] px-2.5 py-0.5 rounded-full shadow-md border border-yellow-200/70 transition-transform active:scale-95">
-                ⏭️ Siguiente: Stage 2 (La Paz)
-            </button>
-            <button id="btn-hud-next-stage" onclick="proceedToNextStageRepo()" class="hidden bg-gradient-to-r from-yellow-400 via-amber-300 to-emerald-400 text-slate-950 font-black text-[9px] px-2.5 py-0.5 rounded-full animate-pulse shadow-lg">
-                👑 CORONAR LEYENDA & VOLVER AL STAGE 1 ➔
-            </button>
-        </div>
-
-        <!-- PANEL ANTERIOR CONSERVADO COMO TAREA DE STAGE (SIN EL SÍMBOLO DE REGALOS) -->
-        <div id="gifts-wrapper" class="absolute left-3 top-36 bottom-28 pointer-events-auto z-40 flex items-start transition-all duration-300 -translate-x-[120%]">
-            <div id="tiktok-gifts-panel" class="glass-panel p-3 rounded-2xl flex flex-col gap-2 border border-cyan-500/60 shadow-[0_0_30px_rgba(6,182,212,0.35)] w-72 sm:w-80 max-h-full overflow-hidden">
-                
-                <!-- Cabecera del Panel Nivel 2: 30 Malabares Extremos y Acrobacias VIP -->
-                <div class="flex justify-between items-center border-b border-cyan-500/40 pb-2">
+        <!-- PANEL NIVEL 2: 30 ACROBACIAS VIP (INICIA OCULTO PARA NO TAPAR LA PANTALLA EN MÓVIL/FULLY) -->
+        <div id="gifts-wrapper" class="fixed left-2 sm:left-3 top-28 bottom-14 pointer-events-auto z-40 flex items-start transition-all duration-300 -translate-x-[120%]">
+            <div id="tiktok-gifts-panel" class="glass-panel p-2.5 sm:p-3 rounded-2xl flex flex-col gap-2 border border-cyan-500/70 shadow-[0_0_30px_rgba(6,182,212,0.45)] w-[92vw] max-w-xs max-h-full overflow-hidden">
+                <div class="flex justify-between items-center border-b border-cyan-500/40 pb-1.5">
                     <div>
-                        <h3 class="text-xs font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-indigo-300 to-emerald-300 uppercase tracking-wider">
-                            🤸 Nivel 2: 30 Acrobacias & Malabares VIP
-                        </h3>
-                        <p class="text-[9px] text-gray-300 font-semibold">Piruetas de alto riesgo con anillos de plasma y utilería 3D</p>
+                        <h3 class="text-xs font-black text-cyan-300 uppercase">🤸 Nivel 2: 30 Acrobacias VIP</h3>
+                        <p class="text-[9px] text-gray-300">Piruetas de alto riesgo con utilería 3D</p>
                     </div>
-                    <button onclick="toggleSuperGiftsMenu()" class="text-gray-400 hover:text-white bg-slate-800/80 hover:bg-rose-600/80 rounded-lg px-2 py-0.5 text-xs font-bold transition-colors">
-                        ✕
-                    </button>
+                    <button onclick="toggleSuperGiftsMenu()" class="bg-rose-600/80 hover:bg-rose-500 text-white rounded-lg px-2.5 py-0.5 text-xs font-bold">✕ Ocultar</button>
                 </div>
-
-                <!-- Selector de Categorías de Tareas -->
                 <div class="flex gap-1 text-[9px] font-black uppercase">
-                    <button onclick="filterSuperGifts('all')" id="tab-gift-all" class="flex-1 bg-cyan-600 text-white py-1 rounded-md transition-colors">Todas (30)</button>
-                    <button onclick="filterSuperGifts('popular')" id="tab-gift-popular" class="flex-1 bg-slate-800 hover:bg-slate-700 text-gray-300 py-1 rounded-md transition-colors">Nivel 1</button>
-                    <button onclick="filterSuperGifts('luxury')" id="tab-gift-luxury" class="flex-1 bg-slate-800 hover:bg-slate-700 text-cyan-300 py-1 rounded-md transition-colors">Pro Master</button>
+                    <button onclick="filterSuperGifts('all')" id="tab-gift-all" class="flex-1 bg-cyan-600 text-white py-1 rounded-md">Todas (30)</button>
+                    <button onclick="filterSuperGifts('popular')" id="tab-gift-popular" class="flex-1 bg-slate-800 text-gray-300 py-1 rounded-md">Nivel 1</button>
+                    <button onclick="filterSuperGifts('luxury')" id="tab-gift-luxury" class="flex-1 bg-slate-800 text-cyan-300 py-1 rounded-md">Pro Master</button>
                 </div>
-
-                <!-- Cuadrícula Desplegable de Tareas (Sin símbolo de regalos) -->
-                <div id="super-gifts-grid" class="grid grid-cols-3 gap-1.5 overflow-y-auto pr-1 pb-1 flex-1">
-                    <!-- Se llena dinámicamente sin íconos de regalo -->
-                </div>
+                <div id="super-gifts-grid" class="grid grid-cols-3 gap-1.5 overflow-y-auto pr-1 pb-1 flex-1"></div>
             </div>
         </div>
 
-        <!-- NUEVO PANEL DE COREOGRAFÍA DE GRUPO COORDINADA (LLEVA EL SÍMBOLO DE REGALOS 🎁 Y TODA LA LISTA DE REGALOS DE TIKTOK) -->
-        <div id="group-choreo-wrapper" class="absolute right-3 top-36 bottom-28 pointer-events-auto z-40 flex items-start transition-all duration-300">
-            <div id="group-choreo-panel" class="glass-panel p-3 rounded-2xl flex flex-col gap-2 border border-pink-500/70 shadow-[0_0_32px_rgba(236,72,153,0.45)] w-72 sm:w-84 max-h-full overflow-hidden">
-                <div class="flex justify-between items-center border-b border-pink-500/40 pb-2">
+        <!-- PANEL NIVEL 3: 30 REGALOS TIKTOK 5X (INICIA OCULTO CON translate-x-[120%] PARA NO CUBRIR LA PANTALLA EN MÓVIL/FULLY) -->
+        <div id="group-choreo-wrapper" class="fixed right-2 sm:right-3 top-28 bottom-14 pointer-events-auto z-40 flex items-start transition-all duration-300 translate-x-[120%]">
+            <div id="group-choreo-panel" class="glass-panel p-2.5 sm:p-3 rounded-2xl flex flex-col gap-2 border border-pink-500/80 shadow-[0_0_32px_rgba(236,72,153,0.5)] w-[92vw] max-w-xs max-h-full overflow-hidden">
+                <div class="flex justify-between items-center border-b border-pink-500/40 pb-1.5">
                     <div>
-                        <h3 class="text-xs font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-amber-300 to-cyan-300 uppercase tracking-wider">
-                            🎁 Nivel 3: Show Supremo por Regalos TikTok
-                        </h3>
-                        <p class="text-[9px] text-amber-200 font-semibold">Malabarismo grupal 5X, acrobacias aéreas y efectos digitales</p>
+                        <h3 class="text-xs font-black text-pink-300 uppercase">🎁 Nivel 3: 30 Regalos TikTok 5X</h3>
+                        <p class="text-[9px] text-amber-200">30 coreografías grupales 5X únicas</p>
                     </div>
-                    <button onclick="toggleGroupChoreoMenu()" class="text-gray-400 hover:text-white bg-slate-800/80 hover:bg-rose-600/80 rounded-lg px-2 py-0.5 text-xs font-bold transition-colors">
-                        ✕
-                    </button>
+                    <button onclick="toggleGroupChoreoMenu()" class="bg-rose-600/80 hover:bg-rose-500 text-white rounded-lg px-2.5 py-0.5 text-xs font-bold">✕ Ocultar</button>
                 </div>
-
-                <!-- Selector de Escena Cinematográfica Cirque du Soleil (5 Acróbatas) -->
-                <div class="flex flex-wrap items-center justify-between gap-1 bg-slate-900/95 px-2 py-1.5 rounded-lg border border-amber-400/50 text-[9px]">
-                    <span class="font-black text-amber-300 uppercase">🎪 Escena Circo del Sol:</span>
-                    <div class="flex gap-1 w-full justify-between mt-0.5">
-                        <button onclick="setSquadFormation('v_wedge')" id="fmt-btn-v_wedge" class="flex-1 bg-pink-600 text-white px-1.5 py-0.5 rounded font-black" title="Pirámide / Torre Humana Acrobática de 3 Niveles">🏰 Torre 3 Pisos</button>
-                        <button onclick="setSquadFormation('diamond')" id="fmt-btn-diamond" class="flex-1 bg-slate-800 text-gray-300 px-1.5 py-0.5 rounded font-black" title="Rueda de la Muerte Vertical & Péndulo 5X">🎡 Rueda Muerte</button>
-                        <button onclick="setSquadFormation('line_wave')" id="fmt-btn-line_wave" class="flex-1 bg-slate-800 text-gray-300 px-1.5 py-0.5 rounded font-black" title="Banquine: Vuelos Acrobáticos Cruzados a 3m">🌊 Vuelo Banquine</button>
+                <div class="flex flex-wrap items-center justify-between gap-1 bg-slate-900/95 px-2 py-1 rounded-lg border border-amber-400/50 text-[9px]">
+                    <div class="flex gap-1 w-full justify-between">
+                        <button onclick="setSquadFormation('v_wedge')" id="fmt-btn-v_wedge" class="flex-1 bg-pink-600 text-white px-1.5 py-0.5 rounded font-black">🏰 Torre 3 Pisos</button>
+                        <button onclick="setSquadFormation('diamond')" id="fmt-btn-diamond" class="flex-1 bg-slate-800 text-gray-300 px-1.5 py-0.5 rounded font-black">🎡 Rueda Muerte</button>
+                        <button onclick="setSquadFormation('line_wave')" id="fmt-btn-line_wave" class="flex-1 bg-slate-800 text-gray-300 px-1.5 py-0.5 rounded font-black">🌊 Vuelo Banquine</button>
                     </div>
                 </div>
-
-                <!-- Filtro de toda la lista de regalos de TikTok -->
                 <div class="flex gap-1 text-[9px] font-black uppercase">
-                    <button onclick="filterGroupChoreoGifts('all')" id="tab-group-all" class="flex-1 bg-gradient-to-r from-pink-600 to-amber-500 text-white py-1 rounded-md transition-colors">🎁 Todos (30)</button>
-                    <button onclick="filterGroupChoreoGifts('popular')" id="tab-group-popular" class="flex-1 bg-slate-800 hover:bg-slate-700 text-gray-300 py-1 rounded-md transition-colors">Populares</button>
-                    <button onclick="filterGroupChoreoGifts('luxury')" id="tab-group-luxury" class="flex-1 bg-slate-800 hover:bg-slate-700 text-amber-300 py-1 rounded-md transition-colors">Épicos VIP</button>
+                    <button onclick="filterGroupChoreoGifts('all')" id="tab-group-all" class="flex-1 bg-gradient-to-r from-pink-600 to-amber-500 text-white py-1 rounded-md">🎁 Todos (30)</button>
+                    <button onclick="filterGroupChoreoGifts('popular')" id="tab-group-popular" class="flex-1 bg-slate-800 text-gray-300 py-1 rounded-md">Populares</button>
+                    <button onclick="filterGroupChoreoGifts('luxury')" id="tab-group-luxury" class="flex-1 bg-slate-800 text-amber-300 py-1 rounded-md">Épicos VIP</button>
                 </div>
-
-                <!-- Cuadrícula con los 30 Regalos Oficiales de TikTok que activan la Coreografía Grupal -->
-                <div id="group-choreo-gifts-grid" class="grid grid-cols-3 gap-1.5 overflow-y-auto pr-1 pb-1 flex-1">
-                    <!-- Se llena dinámicamente con el símbolo 🎁 y todos los regalos de TikTok -->
-                </div>
+                <div id="group-choreo-gifts-grid" class="grid grid-cols-3 gap-1.5 overflow-y-auto pr-1 pb-1 flex-1"></div>
             </div>
         </div>
 
@@ -1991,16 +1968,117 @@
             renderGroupChoreoGiftsMenu(category);
         }
 
+        function closeAllFloatingHudDrawers(exceptId = '') {
+            if (exceptId !== 'quick-functions-drawer') {
+                const qf = document.getElementById('quick-functions-drawer');
+                const bQf = document.getElementById('btn-toggle-quick-funcs');
+                if (qf) qf.classList.add('hidden');
+                if (bQf) bQf.innerHTML = '<span>🎛️</span> Funciones ▼';
+            }
+            if (exceptId !== 'custom-panel') {
+                const cp = document.getElementById('custom-panel');
+                const bCp = document.getElementById('btn-toggle-custom');
+                if (cp) {
+                    cp.classList.add('scale-y-0', 'opacity-0', 'h-0');
+                    cp.classList.remove('scale-y-100', 'opacity-100', 'h-auto');
+                }
+                if (bCp) bCp.innerHTML = '<span>👗</span> Personajes ▼';
+            }
+            if (exceptId !== 'livefest-progress-drawer') {
+                const lfd = document.getElementById('livefest-progress-drawer');
+                const bLf = document.getElementById('btn-toggle-livefest-panel');
+                if (lfd) {
+                    lfd.classList.add('hidden');
+                    lfd.classList.remove('flex');
+                }
+                if (bLf) bLf.innerHTML = '<span>🏆</span> LiveFest ▼';
+            }
+            if (exceptId !== 'effects-panel') {
+                const ep = document.getElementById('effects-panel');
+                const bEp = document.getElementById('btn-toggle-effects');
+                if (ep) {
+                    ep.classList.add('scale-y-0', 'opacity-0', 'h-0');
+                    ep.classList.remove('scale-y-100', 'opacity-100', 'h-auto');
+                }
+                if (bEp) bEp.innerHTML = '<span>📢</span> DJ / Letreros ▼';
+            }
+            if (exceptId !== 'group-choreo-wrapper') {
+                const gcw = document.getElementById('group-choreo-wrapper');
+                const bGc = document.getElementById('btn-toggle-group-choreo');
+                if (gcw) gcw.classList.add('translate-x-[120%]');
+                if (bGc) bGc.innerHTML = '<span>🎁</span> Regalos 5X ▼';
+            }
+            if (exceptId !== 'gifts-wrapper') {
+                const gw = document.getElementById('gifts-wrapper');
+                const bGw = document.getElementById('btn-toggle-super-gifts');
+                if (gw) gw.classList.add('-translate-x-[120%]');
+                if (bGw) bGw.innerHTML = '<span>🤸</span> VIP 30 ▼';
+            }
+        }
+
+        function toggleQuickFunctionsDrawer() {
+            const drawer = document.getElementById('quick-functions-drawer');
+            const btn = document.getElementById('btn-toggle-quick-funcs');
+            if (!drawer) return;
+            const isHidden = drawer.classList.contains('hidden');
+            closeAllFloatingHudDrawers('quick-functions-drawer');
+            if (isHidden) {
+                drawer.classList.remove('hidden');
+                if (btn) btn.innerHTML = '<span>🎛️</span> Funciones ▲';
+            } else {
+                drawer.classList.add('hidden');
+                if (btn) btn.innerHTML = '<span>🎛️</span> Funciones ▼';
+            }
+        }
+
+        function toggleLiveFestAndProgressPanel() {
+            const drawer = document.getElementById('livefest-progress-drawer');
+            const btn = document.getElementById('btn-toggle-livefest-panel');
+            if (!drawer) return;
+            const isHidden = drawer.classList.contains('hidden');
+            closeAllFloatingHudDrawers('livefest-progress-drawer');
+            if (isHidden) {
+                drawer.classList.remove('hidden');
+                drawer.classList.add('flex');
+                if (btn) btn.innerHTML = '<span>🏆</span> LiveFest ▲';
+            } else {
+                drawer.classList.add('hidden');
+                drawer.classList.remove('flex');
+                if (btn) btn.innerHTML = '<span>🏆</span> LiveFest ▼';
+            }
+        }
+
+        let isAllHudHiddenCleanMode = false;
+        function toggleAllHudPanelsVisibility() {
+            isAllHudHiddenCleanMode = !isAllHudHiddenCleanMode;
+            const topContainer = document.getElementById('top-master-hud-container');
+            const danceWrap = document.getElementById('dance-wrapper');
+            const restoreBtn = document.getElementById('btn-restore-all-hud');
+            closeAllFloatingHudDrawers('');
+            if (isAllHudHiddenCleanMode) {
+                if (topContainer) topContainer.classList.add('hidden');
+                if (danceWrap) danceWrap.classList.add('translate-y-[100%]');
+                if (restoreBtn) restoreBtn.classList.remove('hidden');
+                showNotification('👁️ Pantalla Limpia Activada (Toca "Mostrar Botones" arriba a la derecha para restaurar)', 'text-cyan-300');
+            } else {
+                if (topContainer) topContainer.classList.remove('hidden');
+                if (danceWrap) danceWrap.classList.remove('translate-y-[100%]');
+                if (restoreBtn) restoreBtn.classList.add('hidden');
+            }
+        }
+
         function toggleGroupChoreoMenu() {
             const wrapper = document.getElementById('group-choreo-wrapper');
             const btn = document.getElementById('btn-toggle-group-choreo');
             if (!wrapper) return;
-            if (wrapper.classList.contains('translate-x-[120%]')) {
+            const isClosed = wrapper.classList.contains('translate-x-[120%]');
+            closeAllFloatingHudDrawers('group-choreo-wrapper');
+            if (isClosed) {
                 wrapper.classList.remove('translate-x-[120%]');
-                if (btn) btn.innerHTML = '<span>🎁</span> Coreo Grupal TikTok ▲';
+                if (btn) btn.innerHTML = '<span>🎁</span> Regalos 5X ▲';
             } else {
                 wrapper.classList.add('translate-x-[120%]');
-                if (btn) btn.innerHTML = '<span>🎁</span> Coreo Grupal TikTok ▼';
+                if (btn) btn.innerHTML = '<span>🎁</span> Regalos 5X ▼';
             }
         }
 
@@ -4266,46 +4344,71 @@
             document.getElementById('banners-container').innerHTML = ''; showNotification("Saliste del club exitosamente ✌️", "text-gray-300");
         }
 
-        function toggleCustomPanel() {
+                function toggleCustomPanel() {
             const panel = document.getElementById('custom-panel'); const btn = document.getElementById('btn-toggle-custom');
-            if (panel.classList.contains('scale-y-0')) { panel.classList.remove('scale-y-0', 'opacity-0', 'h-0'); panel.classList.add('scale-y-100', 'opacity-100', 'h-auto'); btn.innerHTML = '👗 Ocultar Menú de Apariencia ▲';
-            } else { panel.classList.add('scale-y-0', 'opacity-0', 'h-0'); panel.classList.remove('scale-y-100', 'opacity-100', 'h-auto'); btn.innerHTML = '👗 Mostrar Menú de Apariencia ▼'; }
+            const isClosed = panel.classList.contains('scale-y-0');
+            closeAllFloatingHudDrawers('custom-panel');
+            if (isClosed) {
+                panel.classList.remove('scale-y-0', 'opacity-0', 'h-0');
+                panel.classList.add('scale-y-100', 'opacity-100', 'h-auto');
+                if (btn) btn.innerHTML = '<span>👗</span> Personajes ▲';
+            } else {
+                panel.classList.add('scale-y-0', 'opacity-0', 'h-0');
+                panel.classList.remove('scale-y-100', 'opacity-100', 'h-auto');
+                if (btn) btn.innerHTML = '<span>👗</span> Personajes ▼';
+            }
         }
 
         function toggleEffectsPanel() {
             const panel = document.getElementById('effects-panel'); const btn = document.getElementById('btn-toggle-effects');
-            if (panel.classList.contains('scale-y-0')) { panel.classList.remove('scale-y-0', 'opacity-0', 'h-0'); panel.classList.add('scale-y-100', 'opacity-100', 'h-auto'); btn.innerHTML = '✨ Ocultar Menú DJ & Letreros 3D ▲';
-            } else { panel.classList.add('scale-y-0', 'opacity-0', 'h-0'); panel.classList.remove('scale-y-100', 'opacity-100', 'h-auto'); btn.innerHTML = '✨ Mostrar Menú DJ & Letreros 3D ▼'; }
+            const isClosed = panel.classList.contains('scale-y-0');
+            closeAllFloatingHudDrawers('effects-panel');
+            if (isClosed) {
+                panel.classList.remove('scale-y-0', 'opacity-0', 'h-0');
+                panel.classList.add('scale-y-100', 'opacity-100', 'h-auto');
+                if (btn) btn.innerHTML = '<span>📢</span> DJ / Letreros ▲';
+            } else {
+                panel.classList.add('scale-y-0', 'opacity-0', 'h-0');
+                panel.classList.remove('scale-y-100', 'opacity-100', 'h-auto');
+                if (btn) btn.innerHTML = '<span>📢</span> DJ / Letreros ▼';
+            }
         }
 
         function toggleDancePanel() {
             const wrapper = document.getElementById('dance-wrapper'); const btn = document.getElementById('btn-toggle-dance');
-            if (wrapper.classList.contains('translate-y-[100%]')) { wrapper.classList.remove('translate-y-[100%]'); btn.innerHTML = '<span>▼</span> Ocultar Panel de Pasos';
-            } else { wrapper.classList.add('translate-y-[100%]'); btn.innerHTML = '<span>▲</span> Mostrar Panel de Pasos'; }
+            if (wrapper.classList.contains('translate-y-[100%]')) {
+                wrapper.classList.remove('translate-y-[100%]');
+                if (btn) btn.innerHTML = '<span>▼</span> Ocultar 20 Pasos Nivel 1';
+            } else {
+                wrapper.classList.add('translate-y-[100%]');
+                if (btn) btn.innerHTML = '<span>▲</span> Mostrar 20 Pasos Nivel 1';
+            }
         }
 
         function toggleSuperGiftsMenu() {
             const wrapper = document.getElementById('gifts-wrapper');
             const btn = document.getElementById('btn-toggle-super-gifts');
             if (!wrapper) return;
-            if (wrapper.classList.contains('-translate-x-[120%]')) {
+            const isClosed = wrapper.classList.contains('-translate-x-[120%]');
+            closeAllFloatingHudDrawers('gifts-wrapper');
+            if (isClosed) {
                 wrapper.classList.remove('-translate-x-[120%]');
-                if (btn) btn.innerHTML = '<span>🎯</span> Tareas Stage ▲';
+                if (btn) btn.innerHTML = '<span>🤸</span> VIP 30 ▲';
             } else {
                 wrapper.classList.add('-translate-x-[120%]');
-                if (btn) btn.innerHTML = '<span>🎯</span> Tareas Stage ▼';
+                if (btn) btn.innerHTML = '<span>🤸</span> VIP 30 ▼';
             }
         }
 
         function toggleAdPanel() {
             const panel = document.getElementById('ad-panel');
-            if (panel.classList.contains('-translate-x-[150%]')) {
-                panel.classList.remove('-translate-x-[150%]');
-                if(!document.getElementById('effects-panel').classList.contains('scale-y-0')) { toggleEffectsPanel(); }
+            if (panel.classList.contains('-translate-x-[250%]')) {
+                closeAllFloatingHudDrawers('');
+                panel.classList.remove('-translate-x-[250%]');
+                panel.classList.add('-translate-x-1/2');
             } else {
-                panel.classList.add('-translate-x-[150%]');
-                document.getElementById('ad-view-mode').classList.remove('hidden'); document.getElementById('ad-view-mode').classList.add('flex');
-                document.getElementById('ad-edit-mode').classList.remove('flex'); document.getElementById('ad-edit-mode').classList.add('hidden');
+                panel.classList.add('-translate-x-[250%]');
+                panel.classList.remove('-translate-x-1/2');
             }
         }
 
