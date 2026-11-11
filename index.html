@@ -1968,6 +1968,7 @@
             playSynthSound('step');
             renderGroupChoreoGiftsMenu(category);
         }
+	
 	function closeAllFloatingHudDrawers(exceptId = '') {
             if (exceptId !== 'ad-panel') {
                 const ap = document.getElementById('ad-panel');
@@ -2022,6 +2023,22 @@
                 if (bGw) bGw.innerHTML = '<span>🤸</span> VIP 30 ▼';
             }
         }
+
+        function toggleQuickFunctionsDrawer() {
+            const drawer = document.getElementById('quick-functions-drawer');
+            const btn = document.getElementById('btn-toggle-quick-funcs');
+            if (!drawer) return;
+            const isHidden = drawer.classList.contains('hidden');
+            closeAllFloatingHudDrawers('quick-functions-drawer');
+            if (isHidden) {
+                drawer.classList.remove('hidden');
+                if (btn) btn.innerHTML = '<span>🎛️</span> Funciones ▲';
+            } else {
+                drawer.classList.add('hidden');
+                if (btn) btn.innerHTML = '<span>🎛️</span> Funciones ▼';
+            }
+        }
+
         function toggleLiveFestAndProgressPanel() {
             const drawer = document.getElementById('livefest-progress-drawer');
             const btn = document.getElementById('btn-toggle-livefest-panel');
@@ -2038,7 +2055,7 @@
                 if (btn) btn.innerHTML = '<span>🏆</span> LiveFest ▼';
             }
         }
-
+	
         let isAllHudHiddenCleanMode = false;
         function toggleAllHudPanelsVisibility() {
             isAllHudHiddenCleanMode = !isAllHudHiddenCleanMode;
